@@ -1,0 +1,80 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab/*  workflow_dispatch:
+/*题目描述
+宁宁参加奥数班，他遇到的第一个问题是这样的：口口口+口口口=口口口，宁宁需要将1~9 九个数分别填进对应的空格内，使等式成立。现在宁宁填了一个算式，你能帮他验证是否正确么？
+输入
+输入为多组测试数据。
+
+分别输入三个三位数，依次表示等式里的三个数。
+输出
+如果等式成立，输出：YES!，否则输出：NO!
+样例输入 Copy
+173 286 459
+样例输出 Copy
+YES!*/
+#include<stdio.h>
+int main(){
+	int g[]={1,2,3,4,5,6,7,8,9} ;
+	int flag[9];
+    int a,b,c,i;
+	while(scanf("%d %d %d",&a,&b,&c)!=EOF){
+	for(i=0;i<9;i++)flag[i]=0;
+	int flag_1=0;
+	if(a+b==c&&(a<1000&&b<1000&&c<1000)){
+		flag_1=1;
+	 for(i=0;i<9;i++){ 
+		if(a%10==g[i])flag[i]=1;
+        if(a/10%10==g[i]) flag[i]=1;
+        if(a/100==g[i])flag[i]=1;
+
+		if(b%10==g[i])flag[i]=1;
+        if(b/10%10==g[i]) flag[i]=1;
+        if(b/100==g[i])flag[i]=1;
+
+		if(c%10==g[i])flag[i]=1;
+        if(c/10%10==g[i]) flag[i]=1;
+        if(c/100==g[i])flag[i]=1;
+		}
+	 for(i=0;i<9;i++)if(flag[i]==0){
+			flag_1=0; 
+			break;
+		}	
+	}
+	if(flag_1==0)printf("NO!\n");
+	  else printf("YES!\n"); 
+	}
+	return 0;
+ } 
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
